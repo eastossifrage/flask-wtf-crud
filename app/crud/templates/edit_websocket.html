@@ -1,0 +1,34 @@
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-sm-offset-2">
+        <form method="post" role="form">
+            {{ editUserForm.hidden_tag() }}
+            <div class="col-xs-12 col-sm-8">              
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
+                    {{ editUserForm.username(class="form-control", placeholder="用户名",required="", autofocus="") }}
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> </span>
+                    {{ editUserForm.email(class="form-control", placeholder="邮 箱", required="") }}
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i> </span>
+                    {{ editUserForm.role(class="form-control", required="") }}
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-tree-deciduous"></i> </span>
+                    {{ editUserForm.status(class="form-control", required="") }}
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-default" type="reset" value="重 置">
+                    {{ editUserForm.submit(class="btn btn-primary") }}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

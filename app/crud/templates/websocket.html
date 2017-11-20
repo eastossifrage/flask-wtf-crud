@@ -1,0 +1,97 @@
+{% extends 'common/base.html' %}
+{% block content %}
+{% include 'common/alert.html' %}
+{% for field_name, field_errors in addUserForm.errors|dictsort if field_errors %}
+    {% for error in field_errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{{ addUserForm[field_name].label }}错误：</strong> {{ error }}
+        </div>
+    {% endfor %}
+{% endfor %}
+<h3 class="page-header"> CRUD 之 websocket 局部显示示例</h3>
+<small id="url_show"></small>
+<div id="log"></div>
+<table class ="table table-hover">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>权限</th>
+            <th>状态</th>
+            <th>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target=".bs-example-modal-sm">增加</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody class="small" id="users_show">
+        <tr>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ user.username}}</td>
+                    <td>{{ user.email}}</td>                    
+                    {% if user.role %}
+                        <td>管理员</td>
+                    {% else %}
+                        <td>一般用户</td>
+                    {% endif %}
+                    {% if user.status %}
+                        <td>正常</td>
+                    {% else %}
+                        <td>注销</td>
+                    {% endif %}
+                    <td><a href="{{ url_for('.user_edit', user_id=user.id) }}"> 修改</a> |
+                        <a href="javascript:delete_user_{{ user.id }}()">删除</a>
+                        <form method="post" role="form" id="delete_user_{{ user.id }}">
+                            {{ deleteUserForm.hidden_tag() }}
+                            {{ deleteUserForm.user_id(class="hidden", value=user.id) }}
+                        </form>
+                        <script type="text/javascript">
+                           function delete_user_{{ user.id }}(){
+                               $("#delete_user_{{ user.id }}").submit() ;
+                           }
+                        </script>
+                    </td>
+                </tr>
+                {% endfor %}
+        </tr>
+    </tbody>
+</table>    
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">增加信息</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" role="form">
+                    {{ addUserForm.hidden_tag() }}                    
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
+                        {{ addUserForm.username(class="form-control", placeholder="用户名",required="", autofocus="") }}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> </span>
+                        {{ addUserForm.email(class="form-control", placeholder="邮 箱", required="") }}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i> </span>
+                        {{ addUserForm.role(class="form-control", required="") }}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-tree-deciduous"></i> </span>
+                        {{ addUserForm.status(class="form-control", required="") }}
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-default" type="reset" value="重 置">
+                        {{ addUserForm.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
