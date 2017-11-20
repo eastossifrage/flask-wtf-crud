@@ -1,3 +1,9 @@
+
+# **本仓库有现有两个分支，其中的 master 分支为 websocket版本，basic 分支为 flask-wtf 版本，请根据需求切换分支**。
+
+
+
+
 # 基于 flask + socket.io 的 CRUD 异步操作
 
 > Flask 作为一个全栈架构，如果你只会 python，而不懂 javascript 的前端知识，似乎是无法支撑起你的 web 梦想的，比如，一个简单的页面 **局部刷新** 功能，你就需要用到 ajax 的知识，当然，你还可以使用 HTML5 的新特性 —— websocket功能，好在 flask 还提供了一个 flask-socketio 插件，本文我们就探讨一下这个 flask-scoketio插件的用法。
