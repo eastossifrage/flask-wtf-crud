@@ -73,7 +73,7 @@ def user_edit(user_id):
         else:
             user.status = False
         flash({'success': u'用户资料已修改成功！'})
-        return redirect(url_for('.basic'))
+        return redirect(url_for('.websocket'))
 
     return render_template('edit_websocket.html', editUserForm=edit_user_form, user=user)
 
